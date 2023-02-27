@@ -1,0 +1,113 @@
+[1mdiff --git a/assignment1/src/main/java/assignments/assignment1/NotaGenerator.java b/assignment1/src/main/java/assignments/assignment1/NotaGenerator.java[m
+[1mindex 3f515a4..89aa432 100644[m
+[1m--- a/assignment1/src/main/java/assignments/assignment1/NotaGenerator.java[m
+[1m+++ b/assignment1/src/main/java/assignments/assignment1/NotaGenerator.java[m
+[36m@@ -1,15 +1,51 @@[m
+ package assignments.assignment1;[m
+ [m
+[32m+[m[32m// Mengimport module[m
+ import java.util.Scanner;[m
+ [m
+ public class NotaGenerator {[m
+     private static final Scanner input = new Scanner(System.in);[m
+[31m-[m
+[31m-    /**[m
+[31m-     * Method main, program utama kalian berjalan disini.[m
+[31m-     */[m
+[32m+[m[32m    public static boolean looping = true;[m
+[32m+[m[41m    [m
+[32m+[m[32m    // Method main, program utama kalian berjalan disini.[m
+     public static void main(String[] args) {[m
+         // TODO: Implement interface menu utama[m
+[32m+[m[32m        while (looping) {[m
+[32m+[m[32m            printMenu();[m
+[32m+[m[32m            System.out.print("Pilihan: ");[m
+[32m+[m[32m            String pilihan = input.nextLine();[m
+[32m+[m[32m            System.out.println("================================");[m
+[32m+[m[41m            [m
+[32m+[m[32m            // input.nextLine(); // hilangkan nanti, untuk sekarang save saja dulu[m
+[32m+[m
+[32m+[m[32m            switch (pilihan) {[m
+[32m+[m[32m                case "1":[m
+[32m+[m[32m                    System.out.print("Masukkan nama Anda: ");[m
+[32m+[m[32m                    String nama = input.next();[m
+[32m+[m[32m                    input.nextLine();[m
+[32m+[m[32m                    System.out.print("Masukkan nomor handphone Anda: ");[m
+[32m+[m[32m                    String nomorHP = input.nextLine();[m
+[32m+[m[32m                    while (!nomorHP.matches("\\d+")) { // Checking if input is digit with regex[m
+[32m+[m[32m                        System.out.println("Nomor hp hanya menerima digit");[m
+[32m+[m[32m                        nomorHP = input.nextLine();[m
+[32m+[m[32m                    }[m
+[32m+[m[32m                    String id = generateId(nama, nomorHP);[m
+[32m+[m[32m                    System.out.println("ID Anda : " + id);[m
+[32m+[m[32m                    break;[m
+[32m+[m[32m                case "2":[m
+[32m+[m[32m                    // generateNota(null, null, pilihan, null);[m
+[32m+[m[32m                    break;[m
+[32m+[m[32m                case "0":[m
+[32m+[m[32m                    System.out.println("Terima kasih telah menggunakan NotaGenerator!");[m
+[32m+[m[32m                    looping = false;[m
+[32m+[m[32m                    break;[m
+[32m+[m[32m                default:[m
+[32m+[m[32m                    System.out.println("Perintah tidak diketahui, silahkan periksa kembali.");[m
+[32m+[m[41m                    [m
+[32m+[m
+[32m+[m[32m            }[m
+[32m+[m[41m            [m
+[32m+[m[32m        }[m
+     }[m
+ [m
+     /**[m
+[36m@@ -33,23 +69,38 @@[m [mpublic class NotaGenerator {[m
+         System.out.println("| Reguler | 3 Hari |  7000 / Kg |");[m
+         System.out.println("+-------------------------------+");[m
+     }[m
+[31m-[m
+[32m+[m[41m    [m
+     /**[m
+      * Method untuk membuat ID dari nama dan nomor handphone.[m
+[31m-     * Parameter dan return type dari method ini tidak boleh diganti agar tidak mengganggu testing[m
+[31m-     *[m
+      * @return String ID anggota dengan format [NAMADEPAN]-[nomorHP]-[2digitChecksum][m
+      */[m
+     public static String generateId(String nama, String nomorHP){[m
+[31m-        // TODO: Implement generate ID sesuai soal.[m
+[31m-        return null;[m
+[32m+[m[32m        String namaKapital = nama.toUpperCase();[m
+[32m+[m[32m        String idBefore = namaKapital + "-" + nomorHP;[m
+[32m+[m[32m        String idAfter = "";[m
+[32m+[m[32m        int checksum = 0;[m
+[32m+[m[32m        for (int i = 0; i < idBefore.length(); i++) {[m
+[32m+[m[32m            char letter = idBefore.charAt(i);[m
+[32m+[m[32m            if (Character.isUpperCase(letter)) {[m
+[32m+[m[32m                int position = (letter - 'A') + 1;[m
+[32m+[m[32m                checksum += position;[m
+[32m+[m[32m            } else if (Character.isDigit(letter)) {[m
+[32m+[m[32m                checksum += Character.getNumericValue(letter);[m
+[32m+[m[32m            } else {[m
+[32m+[m[32m                checksum += 7;[m
+[32m+[m[32m            }[m
+[32m+[m[32m        }[m
+[32m+[m[32m        if (checksum < 10) {[m
+[32m+[m[32m            idAfter = idBefore + "-0" + checksum;[m
+[32m+[m[32m        } else {[m
+[32m+[m[32m            idAfter = idBefore + "-" + checksum;[m
+[32m+[m[32m        }[m
+[32m+[m[32m        return idAfter;[m
+     }[m
+ [m
+     /**[m
+      *[m
+      * Method untuk membuat Nota.[m
+[31m-     * Parameter dan return type dari method ini tidak boleh diganti agar tidak mengganggu testing.[m
+[31m-     *[m
+      * @return string nota dengan format di bawah:[m
+      *         <p>ID    : [id][m
+      *         <p>Paket : [paket][m
+[36m@@ -63,4 +114,4 @@[m [mpublic class NotaGenerator {[m
+         // TODO: Implement generate nota sesuai soal.[m
+         return null;[m
+     }[m
+[31m-}[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
