@@ -28,8 +28,7 @@ public class NotaGenerator {
                 case "1":
                     // Input Nama
                     System.out.println("Masukkan nama Anda: ");
-                    String nama1 = input.next();
-                    input.nextLine();   // Mengambil input buffer dari input.next()
+                    String nama1 = input.nextLine();
 
                     // Input Nomor HP
                     System.out.println("Masukkan nomor handphone Anda: ");
@@ -43,8 +42,7 @@ public class NotaGenerator {
                 case "2":
                     // Input Nama
                     System.out.println("Masukkan nama Anda: ");
-                    String nama2 = input.next();
-                    input.nextLine();
+                    String nama2 = input.nextLine();
 
                     // Input Nomor HP
                     System.out.println("Masukkan nomor handphone Anda: ");
@@ -133,7 +131,8 @@ public class NotaGenerator {
     }
     
     // Method untuk membuat ID dari nama dan nomor handphone serta ditambah checksum di akhir
-    public static String generateId(String nama, String nomorHP){
+    public static String generateId(String nama, String nomorHP) {
+        nama = nama.replaceAll("\\s.*", ""); //  Mengambil kata sebelum whitespace pertama saja menggunakan regex
         String namaKapital = nama.toUpperCase();
         String idBefore = namaKapital + "-" + nomorHP;
         String idAfter = "";
