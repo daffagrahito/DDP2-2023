@@ -147,6 +147,9 @@ public class NotaGenerator {
             } else {
                 checksum += 7;
             }
+            
+        // Membuat checksum tidak lebih dari 2 digit
+        checksum %= 100;
         }
         // Mengecek apabila checksum single digit atau bukan
         if (checksum < 10) {
