@@ -2,6 +2,10 @@ package assignments.assignment2;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Scanner;
+import java.util.ArrayList;
+
+import assignments.assignment1.NotaGenerator;
+
 
 import static assignments.assignment1.NotaGenerator.*;
 
@@ -9,8 +13,8 @@ public class MainMenu {
     private static final Scanner input = new Scanner(System.in);
     private static SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
     private static Calendar cal = Calendar.getInstance();
-    private static Nota[] notaList;
-    private static Member[] memberList;
+    private static ArrayList<Nota> notaList = new ArrayList<Nota>();
+    private static ArrayList<Member> memberList = new ArrayList<Member>();
 
     public static void main(String[] args) {
         boolean isRunning = true;
@@ -34,19 +38,78 @@ public class MainMenu {
     }
 
     private static void handleGenerateUser() {
-        // TODO: handle generate user
+        System.out.println("Masukan nama Anda: ");
+        String nama = input.nextLine();
+
+        System.out.println("Masukan nomor handphone Anda: ");
+        String noHp = input.nextLine();
+        noHp = NotaGenerator.validatePhoneNumber(noHp);
+
+        Member currentMember = new Member(nama, noHp);
+
+        // Mengecek apakah object Member yang akan dibuat sudah ada di dalam ArrayList
+        for (Member i : memberList) {
+            if (i.equals(currentMember)) { // Equals yang digunakan adalah method overriding dari class Member
+                System.out.printf("Member dengan nama %s dan nomor hp %s sudah ada!\n", currentMember.getNama(), currentMember.getNoHp());
+                return;
+            } 
+        }
+        // Bila belum ada maka akan ditambahkan dalam ArrayList
+        memberList.add(currentMember);
+        System.out.println("Berhasil membuat member dengan ID " + NotaGenerator.generateId(nama, noHp) + "!");
+        
     }
 
     private static void handleGenerateNota() {
-        // TODO: handle ambil cucian
+        System.out.println("Masukkan ID member: ");
+        String idMember = input.nextLine();
+
+        // Input Paket
+        System.out.println("Masukkan paket laundry: ");
+        String paket = input.nextLine();
+        
+        // Memvalidasi input paket sesuai ketentuan yang diminta
+        while (!paket.equalsIgnoreCase("express") && !paket.equalsIgnoreCase("fast") && !paket.equalsIgnoreCase("reguler")) {
+            if (paket.equals("?")) {
+                showPaket();
+                System.out.println("Masukkan paket laundry: ");
+                paket = input.nextLine();
+            } else {
+                System.out.println("Paket " + paket + " tidak diketahui\n[ketik ? untuk mencari tahu jenis paket]");
+                System.out.println("Masukkan paket laundry: ");
+                paket = input.nextLine();
+            }
+        }
+
+        // Input berat cucian
+        System.out.println("Masukkan berat cucian Anda [Kg]: ");
+        String berat = input.nextLine();
+
+        // Mengecek apabila input adalah bilangan integer positif dengan regex
+        while (!berat.matches("^\\d+$") || berat.equals("0")) { 
+            System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
+            berat = input.nextLine();
+        }
+        // Mengecek apabila berat yang diinput dibawah 2 kg
+        if (Integer.parseInt(berat) < 2) {
+            System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
+            berat = "2";
+        }
     }
 
     private static void handleListNota() {
-        // TODO: handle list semua nota pada sistem
+        System.out.println("Terdaftar" + notaList.size() + " nota dalam sistem.");
     }
 
     private static void handleListUser() {
-        // TODO: handle list semua user pada sistem
+        System.out.println("Terdaftar " + memberList.size() + " member dalam sistem.");
+        if (memberList.isEmpty()) { // Mengecek apakah memberList kosong atau tidak
+            return;
+        } else {
+            for (int i = 0; i < memberList.size(); i++) {
+                System.out.print("- " + memberList.get(i).getId() + ": " + memberList.get(i).getNama() + "\n");
+            }
+        }
     }
 
     private static void handleAmbilCucian() {
@@ -54,7 +117,7 @@ public class MainMenu {
     }
 
     private static void handleNextDay() {
-        // TODO: handle ganti hari
+        System.out.println("Dek Depe tidur hari ini... zzz...");
     }
 
     private static void printMenu() {
@@ -70,4 +133,13 @@ public class MainMenu {
         System.out.println("[0] Exit");
     }
 
+    // Method untuk menampilkan paket.
+    private static void showPaket() {
+        System.out.println("+-------------Paket-------------+");
+        System.out.println("| Express | 1 Hari | 12000 / Kg |");
+        System.out.println("| Fast    | 2 Hari | 10000 / Kg |");
+        System.out.println("| Reguler | 3 Hari |  7000 / Kg |");
+        System.out.println("+-------------------------------+");
+    }
 }
+

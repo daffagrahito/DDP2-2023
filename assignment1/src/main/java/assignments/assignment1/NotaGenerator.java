@@ -78,7 +78,7 @@ public class NotaGenerator {
                     String beratCucian = input.nextLine();
 
                     // Mengecek apabila input adalah bilangan integer positif dengan regex
-                    while (!beratCucian.matches("^\\d+$")) { 
+                    while (!beratCucian.matches("^\\d+$") || beratCucian.equals("0")) { 
                         System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
                         beratCucian = input.nextLine();
                     }
@@ -107,7 +107,7 @@ public class NotaGenerator {
     // Method untuk memvalidasi apakah nomorHP inputnya digit semua atau bukan
     public static String validatePhoneNumber(String nomorHP) {
         while (!nomorHP.matches("\\d+")) { // Mengecek bila input adalah digit dengan regex
-            System.out.println("Nomor hp hanya menerima digit");
+            System.out.println("Field nomor hp hanya menerima digit.");
             nomorHP = input.nextLine();
         } return nomorHP;
     }
