@@ -11,8 +11,10 @@ public class Member {
         this.nama = nama;
         this.noHp = noHp;
         this.id = NotaGenerator.generateId(nama, noHp);
-        this.bonusCounter = 0;
+        this.bonusCounter = addBonusCounter();
     }
+
+    public Member() {}
     
     public String getNama() {
         return this.nama;
@@ -30,6 +32,14 @@ public class Member {
         return this.bonusCounter;
     }
 
+    public int addBonusCounter() {
+        this.bonusCounter++;
+        return this.bonusCounter % 3;
+    }
+
+    public int setBonusCounter(int num) {
+        return this.bonusCounter = num;
+    }
     // Method overriding equals untuk mengecek apakah kedua object memiliki konten yang sama
     public boolean equals(Object object) {
         if (object == this) {

@@ -16,7 +16,32 @@ public class Nota {
         this.berat = berat;
         this.tanggalMasuk = tanggalMasuk;
         this.isReady = false;
+        if (this.paket.equalsIgnoreCase("express")) {
+            this.sisaHariPengerjaan = 1;
+        } else if (this.paket.equalsIgnoreCase("fast")) {
+            this.sisaHariPengerjaan = 2;
+        } else {
+            this.sisaHariPengerjaan = 3;
+        }
     }
 
-    // TODO: tambahkan methods yang diperlukan untuk class ini
+    public Member getMember(){ 
+        return this.member;
+    }
+
+    public String getPaket() {
+        return this.paket;
+    }
+
+    public int getBerat() {
+        return this.berat;
+    }
+
+    public String getTanggalMasuk() {
+        return this.tanggalMasuk;
+    }
+
+    // public int updateSisaHariPengerjaan() {
+        
+    // }
 }

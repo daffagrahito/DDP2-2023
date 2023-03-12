@@ -3,6 +3,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import assignments.assignment1.NotaGenerator;
 
@@ -15,6 +17,7 @@ public class MainMenu {
     private static Calendar cal = Calendar.getInstance();
     private static ArrayList<Nota> notaList = new ArrayList<Nota>();
     private static ArrayList<Member> memberList = new ArrayList<Member>();
+    private static int notaIdNumber;
 
     public static void main(String[] args) {
         boolean isRunning = true;
@@ -49,21 +52,37 @@ public class MainMenu {
 
         // Mengecek apakah object Member yang akan dibuat sudah ada di dalam ArrayList
         for (Member i : memberList) {
-            if (i.equals(currentMember)) { // Equals yang digunakan adalah method overriding dari class Member
+            if (i.equals(currentMember)) {      // Equals yang digunakan adalah method overriding dari class Member
                 System.out.printf("Member dengan nama %s dan nomor hp %s sudah ada!\n", currentMember.getNama(), currentMember.getNoHp());
                 return;
-            } 
+            }
         }
         // Bila belum ada maka akan ditambahkan dalam ArrayList
         memberList.add(currentMember);
         System.out.println("Berhasil membuat member dengan ID " + NotaGenerator.generateId(nama, noHp) + "!");
-        
     }
 
     private static void handleGenerateNota() {
         System.out.println("Masukkan ID member: ");
         String idMember = input.nextLine();
-
+        
+        boolean memberIdNotFound = true;        // boolean untuk mengecek bila ada id yang sama atau tidak
+        Member targetMember = new Member();
+        
+        for (Member i : memberList) {
+            if ((i.getId()).equals(idMember)) { // Equals yang digunakan adalah method dari equals pada java.lang.String
+                targetMember = i;
+                memberIdNotFound = false;
+                break;
+            }
+        }
+        
+        // Untuk mengecek apakah tidak ditemukan id yang sama
+        if (memberIdNotFound) {
+            System.out.println("Member dengan ID " + idMember + " tidak ditemukan!");
+            return;
+        }
+        
         // Input Paket
         System.out.println("Masukkan paket laundry: ");
         String paket = input.nextLine();
@@ -72,13 +91,11 @@ public class MainMenu {
         while (!paket.equalsIgnoreCase("express") && !paket.equalsIgnoreCase("fast") && !paket.equalsIgnoreCase("reguler")) {
             if (paket.equals("?")) {
                 showPaket();
-                System.out.println("Masukkan paket laundry: ");
-                paket = input.nextLine();
             } else {
                 System.out.println("Paket " + paket + " tidak diketahui\n[ketik ? untuk mencari tahu jenis paket]");
-                System.out.println("Masukkan paket laundry: ");
-                paket = input.nextLine();
             }
+            System.out.println("Masukkan paket laundry: ");
+            paket = input.nextLine();
         }
 
         // Input berat cucian
@@ -95,6 +112,14 @@ public class MainMenu {
             System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
             berat = "2";
         }
+
+        Nota notaTargetMember = new Nota(targetMember, paket, Integer.parseInt(berat), fmt.format(cal.getTime()));
+
+        System.out.println("Berhasil menambahkan nota!");
+        notaIdNumber++;
+        notaList.add(notaTargetMember);
+        System.out.println("[ID Nota = " + notaIdNumber + "]");
+        System.out.println(generateNota(targetMember, paket, Integer.parseInt(berat), fmt.format(cal.getTime())));
     }
 
     private static void handleListNota() {
@@ -103,13 +128,13 @@ public class MainMenu {
 
     private static void handleListUser() {
         System.out.println("Terdaftar " + memberList.size() + " member dalam sistem.");
-        if (memberList.isEmpty()) { // Mengecek apakah memberList kosong atau tidak
+        if (memberList.isEmpty()) {             // Mengecek apakah memberList kosong atau tidak
             return;
         } else {
             for (int i = 0; i < memberList.size(); i++) {
                 System.out.print("- " + memberList.get(i).getId() + ": " + memberList.get(i).getNama() + "\n");
             }
-        }
+        } return;
     }
 
     private static void handleAmbilCucian() {
@@ -118,6 +143,8 @@ public class MainMenu {
 
     private static void handleNextDay() {
         System.out.println("Dek Depe tidur hari ini... zzz...");
+        cal.add(Calendar.DAY_OF_MONTH, 1);
+        System.out.println("Selamat pagi dunia!\nDek Depe: It's CuciCuci Time.");
     }
 
     private static void printMenu() {
@@ -140,6 +167,38 @@ public class MainMenu {
         System.out.println("| Fast    | 2 Hari | 10000 / Kg |");
         System.out.println("| Reguler | 3 Hari |  7000 / Kg |");
         System.out.println("+-------------------------------+");
+    }
+
+    public static String generateNota(Member member, String paket, int berat, String tanggalTerima){
+        int hargaPaket = 0;
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy"); 
+        LocalDate tanggalTerimaFormatted = LocalDate.parse(tanggalTerima, dateFormat);
+        LocalDate tanggalSelesai;
+
+        // Assign value untuk setiap case dan menambah day pada tanggal
+        if (paket.equalsIgnoreCase("express")) {
+            hargaPaket = 12000;
+            tanggalSelesai = tanggalTerimaFormatted.plusDays(1);
+        } else if (paket.equalsIgnoreCase("fast")) {
+            hargaPaket = 10000;
+            tanggalSelesai = tanggalTerimaFormatted.plusDays(2);
+        } else {
+            hargaPaket = 7000;
+            tanggalSelesai = tanggalTerimaFormatted.plusDays(3);
+        } String tanggalSelesaiString = tanggalSelesai.format(dateFormat);
+
+        String nota = "ID    : "+ member.getId() +"\n" +
+                "Paket : "+ paket +"\n" +
+                "Harga :\n" +
+                berat + " kg x "+ hargaPaket +" = "+(hargaPaket*berat)+ checkDiskon(hargaPaket*berat)+ "\n" +
+                "Tanggal Terima  : "+ tanggalTerima +"\n" +
+                "Tanggal Selesai : " + tanggalSelesaiString;
+        return nota;
+    }
+
+    // Pengecekan bila ada diskon
+    public static String checkDiskon(int totalHarga) {
+        return " = " + totalHarga/2 + "(Discount member 50%!!!)";
     }
 }
 
