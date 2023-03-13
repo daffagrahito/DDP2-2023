@@ -3,53 +3,44 @@ package assignments.assignment2;
 import assignments.assignment1.NotaGenerator;
 
 public class Member {
+    // Fields yang dibutuhkan oleh class Member
     private String nama;
     private String noHp;
     private String id;
     private int bonusCounter;
+    
+    // Constructor dari Member
     public Member(String nama, String noHp) {
         this.nama = nama;
         this.noHp = noHp;
-        this.id = NotaGenerator.generateId(nama, noHp);
-        this.bonusCounter = addBonusCounter();
+        this.id = NotaGenerator.generateId(nama, noHp); // Membuat ID dengan menggunakan method dari NotaGenerator.java
+        this.bonusCounter = 0;                          // Assign value bonusCounter untuk pengecekan diskon nanti dengan mengaplikasikan penggunakan setBonusCounter
     }
-
-    public Member() {}
     
+    // Getter untuk nama member
     public String getNama() {
         return this.nama;
     }
     
+    // Getter untuk nomor hp member
     public String getNoHp() {
         return this.noHp;
     }
 
+    // Getter untuk ID member 
     public String getId() {
         return this.id;
     }
 
+    // Getter untuk bonusCounter
     public int getBonusCounter() {
         return this.bonusCounter;
     }
 
-    public int addBonusCounter() {
+    // Setter untuk bonusCounter 
+    public void setBonusCounter() {
         this.bonusCounter++;
-        return this.bonusCounter % 3;
-    }
-
-    public int setBonusCounter(int num) {
-        return this.bonusCounter = num;
-    }
-    // Method overriding equals untuk mengecek apakah kedua object memiliki konten yang sama
-    public boolean equals(Object object) {
-        if (object == this) {
-            return true;
-        }
-        if (!(object instanceof Member)) {
-            return false;
-        }
-        Member that = (Member) object;
-        return this.nama.equals(that.nama) && this.noHp.equals(that.noHp);
+        this.bonusCounter %= 3;
     }
 }
 
