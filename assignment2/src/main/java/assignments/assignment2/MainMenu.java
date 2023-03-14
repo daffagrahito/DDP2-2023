@@ -156,7 +156,7 @@ public class MainMenu {
         System.out.println("Masukkan ID nota yang akan diambil: ");
         String idNota = input.nextLine();
 
-        // Validasi ID Nota dengan hanya angka integer positif saja yang dibolehkan
+        // Validasi ID Nota dengan hanya angka integer non-negatif saja yang dibolehkan
         while (!idNota.matches("^\\d+$")) { 
             System.out.println("ID nota berbentuk angka!");
             idNota = input.nextLine();
