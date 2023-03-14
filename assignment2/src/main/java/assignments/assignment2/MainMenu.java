@@ -68,7 +68,7 @@ public class MainMenu {
         
         Member targetMember = null;                 // membuat variable class Member yang null (tidak merefer apapun)
         
-        // Mengiterate memberList dan memindahkan refernce targetMember ke ID yang sama
+        // Mengiterate memberList dan memindahkan reference targetMember ke ID yang sama
         for (Member i : memberList) {
             if ((i.getId()).equals(idMember)) {
                 targetMember = i;
@@ -115,7 +115,7 @@ public class MainMenu {
         // Membuat Nota berdasarkan targetMember
         Nota notaTargetMember = new Nota(targetMember, paket, Integer.parseInt(berat), fmt.format(cal.getTime()));
 
-        // Penambahan nota ke List nota dan print list nota
+        // Penambahan nota ke List nota dan print nota yang di generate
         System.out.println("Berhasil menambahkan nota!");
         notaTargetMember.setIdNota(notaIdNumber);
         notaList.add(notaTargetMember);
@@ -156,7 +156,7 @@ public class MainMenu {
         System.out.println("Masukkan ID nota yang akan diambil: ");
         String idNota = input.nextLine();
 
-        // Validasi ID Nota dengan hanya angka saja yang dibolehkan
+        // Validasi ID Nota dengan hanya angka integer positif saja yang dibolehkan
         while (!idNota.matches("^\\d+$")) { 
             System.out.println("ID nota berbentuk angka!");
             idNota = input.nextLine();
@@ -177,10 +177,12 @@ public class MainMenu {
                     break;
                 }
             }
-
-        // Kasus bila idNota tidak ditemukan
-        if (idNotaNotFound) System.out.println("Nota dengan ID " + idNota + " tidak ditemukan!");
         }
+        
+        // Kasus bila idNota tidak ditemukan
+        if (idNotaNotFound) {
+            System.out.println("Nota dengan ID " + idNota + " tidak ditemukan!");
+            }
     }
 
     private static void handleNextDay() {
