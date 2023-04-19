@@ -1,4 +1,5 @@
 package assignments.assignment3.nota;
+import assignments.assignment1.NotaGenerator;
 import assignments.assignment3.nota.service.LaundryService;
 import assignments.assignment3.user.Member;
 public class Nota {
@@ -8,13 +9,19 @@ public class Nota {
     private long baseHarga;
     private int sisaHariPengerjaan;
     private  int berat;
-    private int id;
+    private int idNota;
     private String tanggalMasuk;
-    private boolean isDone;
+    private boolean isDone = false;
     static public int totalNota;
 
     public Nota(Member member, int berat, String paket, String tanggal) {
-        //TODO
+        this.idNota = totalNota;
+        this.member = member;
+        this.berat = berat;
+        this.paket = paket;
+        this.tanggalMasuk = tanggal;
+        this.sisaHariPengerjaan = NotaGenerator.toHariPaket(this.paket);
+        totalNota++;
     }
 
     public void addService(LaundryService service){
@@ -26,7 +33,8 @@ public class Nota {
         return "";
     }
     public void toNextDay() {
-        // TODO
+        this.sisaHariPengerjaan--;
+
     }
 
     public long calculateHarga(){
@@ -41,8 +49,10 @@ public class Nota {
 
     @Override
     public String toString(){
-        // TODO
-        return "";
+        String formattedToString =  String.format("[ID Nota = %d]%n", idNota) + 
+                                    NotaGenerator.generateNota(member.getId(), paket, berat, paket) + 
+                                    "\n--- SERVICE LIST ---\n";
+        return formattedToString;
     }
 
     // Dibawah ini adalah getter
@@ -69,4 +79,9 @@ public class Nota {
     public LaundryService[] getServices(){
         return services;
     }
+
+    public int getIdNota() {
+        return this.idNota;
+    }
+
 }

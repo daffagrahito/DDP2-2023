@@ -12,7 +12,7 @@ public class EmployeeSystem extends SystemCLI {
      * Membuat object baru EmployeeSystem dan mendaftarkan Employee pada CuciCuci
      */
     public EmployeeSystem() {
-        memberList = new Member[]{
+        memberList = new Member[] {
                 new Employee("Dek Depe", "akuDDP"),
                 new Employee("Depram", "musiktualembut"),
                 new Employee("Lita Duo", "gitCommitPush"),
@@ -29,7 +29,9 @@ public class EmployeeSystem extends SystemCLI {
     @Override
     protected boolean processChoice(int choice) {
         boolean logout = false;
-        // TODO:
+        if (choice == 3) {
+            logout = true;                      // Check if i need to add something else later
+        }
         return logout;
     }
 

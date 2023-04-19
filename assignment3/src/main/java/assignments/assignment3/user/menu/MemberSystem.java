@@ -11,7 +11,9 @@ public class MemberSystem extends SystemCLI {
     @Override
     protected boolean processChoice(int choice) {
         boolean logout = false;
-        // TODO
+        if (choice == 3) {
+            logout = true;                      // Check if i need to add something else later
+        }
         return logout;
     }
 
@@ -31,6 +33,13 @@ public class MemberSystem extends SystemCLI {
      * @param member -> Member baru yang akan ditambahkan.
      */
     public void addMember(Member member) {
-        // TODO
+        Member[] newMemberList = new Member[memberList.length + 1];
+
+        for (int i = 0; i < memberList.length; i++) {
+            newMemberList[i] = memberList[i];
+        }
+
+        memberList = newMemberList;
+        memberList[memberList.length - 1] = member;
     }
 }

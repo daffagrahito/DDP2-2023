@@ -75,6 +75,7 @@ public class MainMenu {
             System.out.printf("User dengan nama %s dan nomor hp %s sudah ada!\n", nama, noHp);
             return;
         }
+        registeredMember.setNoHp(noHp); // Not sure if this is useful or not
         System.out.printf("Berhasil membuat user dengan ID %s!\n", registeredMember.getId());
     }
 

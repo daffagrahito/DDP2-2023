@@ -76,8 +76,7 @@ public abstract class SystemCLI {
      * @return true jika ada member dengan ID yang diberikan, false jika tidak.
      */
     public boolean isMemberExist(String id){
-        for (Member member:
-                memberList) {
+        for (Member member : memberList) {
             if(member.getId().equals(id)){
                 return true;
             }

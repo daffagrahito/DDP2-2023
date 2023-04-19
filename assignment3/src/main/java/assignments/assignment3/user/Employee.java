@@ -14,7 +14,9 @@ public class Employee extends Member {
      * @param nama -> Nama lengkap dari employee
      */
     private static String generateId(String nama) {
-        // TODO
-        return "";
+        nama = nama.replaceAll("\\s.*", ""); //  Mengambil kata sebelum whitespace pertama saja menggunakan regex
+        String idEmployee = nama.toUpperCase() + "-" + employeeCount;
+        employeeCount++;
+        return idEmployee;
     }
 }

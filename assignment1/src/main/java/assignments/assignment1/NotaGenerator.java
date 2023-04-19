@@ -122,7 +122,7 @@ public class NotaGenerator {
     }
 
     // Method untuk menampilkan paket.
-    private static void showPaket() {
+    public static void showPaket() {
         System.out.println("+-------------Paket-------------+");
         System.out.println("| Express | 1 Hari | 12000 / Kg |");
         System.out.println("| Fast    | 2 Hari | 10000 / Kg |");
@@ -162,29 +162,93 @@ public class NotaGenerator {
 
     // Method untuk membuat Nota.
     public static String generateNota(String id, String paket, int berat, String tanggalTerima){
-        int hargaPaket = 0;
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy"); 
         LocalDate tanggalTerimaFormatted = LocalDate.parse(tanggalTerima, dateFormat);
         LocalDate tanggalSelesai;
 
         // Assign value untuk setiap case dan menambah day pada tanggal
-        if (paket.equalsIgnoreCase("express")) {
-            hargaPaket = 12000;
+        if (toHariPaket(paket) == 1) {
             tanggalSelesai = tanggalTerimaFormatted.plusDays(1);
-        } else if (paket.equalsIgnoreCase("fast")) {
-            hargaPaket = 10000;
+        } else if (toHariPaket(paket) == 2) {
             tanggalSelesai = tanggalTerimaFormatted.plusDays(2);
         } else {
-            hargaPaket = 7000;
             tanggalSelesai = tanggalTerimaFormatted.plusDays(3);
         } String tanggalSelesaiString = tanggalSelesai.format(dateFormat);
 
         String nota = "ID    : "+ id +"\n" +
                 "Paket : "+ paket +"\n" +
                 "Harga :\n" +
-                berat + " kg x "+ hargaPaket +" = "+(hargaPaket*berat)+"\n" +
+                berat + " kg x "+ toHargaPaket(paket) +" = "+(toHargaPaket(paket)*berat)+"\n" +
                 "Tanggal Terima  : "+ tanggalTerima +"\n" +
                 "Tanggal Selesai : " + tanggalSelesaiString;
         return nota;
+    }
+
+    public static int toHariPaket(String paket) {
+        paket = paket.toLowerCase();
+        if (paket.equals("express"))
+            return 1;
+        if (paket.equals("fast"))
+            return 2;
+        if (paket.equals("reguler"))
+            return 3;
+        return -1;
+    }
+
+    public static long toHargaPaket(String paket) {
+        paket = paket.toLowerCase();
+        if (paket.equals("express"))
+            return 12000;
+        if (paket.equals("fast"))
+            return 10000;
+        if (paket.equals("reguler"))
+            return 7000;
+        return -1;
+    }
+
+    private static boolean isNumeric(String str) {
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c))
+                return false;
+        }
+        return true;
+    }
+
+    public static int getBerat() {
+        System.out.println("Masukan berat cucian Anda [Kg]: ");
+        String beratInput = input.nextLine();
+        while (!isNumeric(beratInput) || Integer.parseInt(beratInput) < 1) {
+            System.out.println("Harap masukan berat cucian Anda dalam bentuk bilangan positif.");
+            beratInput = input.nextLine();
+        }
+        int berat = Integer.parseInt(beratInput);
+
+        if (berat < 2) {
+            System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
+            berat = 2;
+        }
+
+        return berat;
+    }
+
+    public static String getPaket() {
+        String paket = "";
+        while (true) {
+            System.out.println("Masukan paket laundry:");
+            paket = input.nextLine();
+
+            if (paket.equals("?")) {
+                showPaket();
+                continue;
+            }
+
+            if (toHargaPaket(paket) < 0) {
+                System.out.printf("Paket %s tidak diketahui\n", paket);
+                System.out.println("[ketik ? untuk mencari tahu jenis paket]");
+            } else {
+                break;
+            }
+        }
+        return paket;
     }
 }

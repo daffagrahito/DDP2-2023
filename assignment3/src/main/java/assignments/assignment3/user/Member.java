@@ -5,6 +5,7 @@ public class Member {
     protected String id;
     protected String password;
     protected String nama;
+    protected String noHp; // Ini buat apaan ya?
     protected Nota[] notaList = new Nota[0];
 
     public Member(String nama, String id, String password) {
@@ -40,7 +41,9 @@ public class Member {
      * @return true jika ID dan password sesuai dengan instance member, false jika tidak.
      */
     protected boolean authenticate(String password) {
-        // TODO
+        if (password.equals(this.getPassword())) { // May change to this.password instead
+            return true;
+        }
         return false;
     }
 
@@ -56,5 +59,16 @@ public class Member {
 
     public Nota[] getNotaList() {
         return notaList;
+    }
+    public String getPassword() {
+        return this.password;
+    }
+
+    public String getNoHp() {
+        return noHp;
+    }
+
+    public void setNoHp(String nomor) {
+        noHp = nomor;
     }
 }
