@@ -31,7 +31,14 @@ public class Member {
      * @param nota Nota object untuk ditambahkan.
      */
     public void addNota(Nota nota) {
-        // TODO
+        Nota[] newNotaList = new Nota[notaList.length + 1];
+
+        for (int i = 0; i < notaList.length; i++) {
+            newNotaList[i] = notaList[i];
+        }
+
+        notaList = newNotaList;
+        notaList[notaList.length - 1] = nota;
     }
 
     /**
@@ -41,7 +48,7 @@ public class Member {
      * @return true jika ID dan password sesuai dengan instance member, false jika tidak.
      */
     protected boolean authenticate(String password) {
-        if (password.equals(this.getPassword())) { // May change to this.password instead
+        if (password.equals(this.password)) {
             return true;
         }
         return false;
@@ -70,5 +77,10 @@ public class Member {
 
     public void setNoHp(String nomor) {
         noHp = nomor;
+    }
+
+    // Hanya tambahan jika ingin mengecek membernya
+    public String toString() {
+        return getNama() + ":" + getId();
     }
 }

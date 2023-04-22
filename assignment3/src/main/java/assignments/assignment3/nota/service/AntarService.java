@@ -1,24 +1,30 @@
 package assignments.assignment3.nota.service;
 
-import assignments.assignment3.nota.Nota;
+// import assignments.assignment3.nota.Nota;
 
 public class AntarService implements LaundryService{
+    private boolean isAntarDone = false;
     @Override
     public String doWork() {
-        // TODO
-        return "";
+        if (!isAntarDone) {
+            isAntarDone = true;
+        }
+        return "Sedang mengantar...";
     }
 
     @Override
     public boolean isDone() {
-        // TODO
-        return false;
+        return isAntarDone;
     }
 
     @Override
     public long getHarga(int berat) {
-        // TODO
-        return 0;
+        long hargaMinimumAntar = 2000;
+        if (berat <= 4) {
+            return hargaMinimumAntar;
+        } else {
+            return hargaMinimumAntar += ((berat-4) * 500);
+        }
     }
 
     @Override

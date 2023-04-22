@@ -27,10 +27,23 @@ public class EmployeeSystem extends SystemCLI {
      * @return true jika user log.
      */
     @Override
-    protected boolean processChoice(int choice) {
+    protected boolean processChoice(int choice) {   // edit perintah untuk kerja dan display list nota disini
         boolean logout = false;
         if (choice == 3) {
-            logout = true;                      // Check if i need to add something else later
+            logout = true;
+        } else if (choice == 2) {
+            for (Nota nota : notaList) {
+                System.out.println(nota.getNotaStatus());
+            }
+            System.out.println();
+        } else if (choice == 1) {
+            System.out.println("Stand back! " + loginMember.getNama() + " beginning to nyuci!");
+            for (Nota nota : notaList) {
+                System.out.println(nota.kerjakan());
+            }
+            System.out.println();
+        } else {
+            System.out.println("Pilihan tidak valid, silahkan coba lagi.");
         }
         return logout;
     }

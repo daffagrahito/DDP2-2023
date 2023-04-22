@@ -179,8 +179,8 @@ public class NotaGenerator {
                 "Paket : "+ paket +"\n" +
                 "Harga :\n" +
                 berat + " kg x "+ toHargaPaket(paket) +" = "+(toHargaPaket(paket)*berat)+"\n" +
-                "Tanggal Terima  : "+ tanggalTerima +"\n" +
-                "Tanggal Selesai : " + tanggalSelesaiString;
+                "tanggal terima  : "+ tanggalTerima +"\n" +
+                "tanggal selesai : " + tanggalSelesaiString;
         return nota;
     }
 
@@ -214,7 +214,7 @@ public class NotaGenerator {
         return true;
     }
 
-    public static int getBerat() {
+    public static int getBerat(Scanner input) {
         System.out.println("Masukan berat cucian Anda [Kg]: ");
         String beratInput = input.nextLine();
         while (!isNumeric(beratInput) || Integer.parseInt(beratInput) < 1) {
@@ -231,8 +231,9 @@ public class NotaGenerator {
         return berat;
     }
 
-    public static String getPaket() {
+    public static String getPaket(Scanner input) {
         String paket = "";
+        showPaket();
         while (true) {
             System.out.println("Masukan paket laundry:");
             paket = input.nextLine();
