@@ -19,6 +19,7 @@ public class Nota {
     private boolean telat = false;
     private int amountDayTelat = 0;
 
+    // Parameterized Constructor dari Member
     public Nota(Member member, int berat, String paket, String tanggal) {
         this.idNota = totalNota;
         this.member = member;
@@ -31,6 +32,7 @@ public class Nota {
         addService(new CuciService());
     }
 
+    // Menambahkan service ke array milik masing-masing objek Nota
     public void addService(LaundryService service){
         LaundryService[] newServices = new LaundryService[services.length + 1];
 
@@ -42,6 +44,7 @@ public class Nota {
         services[services.length - 1] = service;
     }
 
+    // Mengerjakan service yang ada di nota
     public String kerjakan(){
         for (LaundryService service : services) {
             if (!service.isDone()) {
@@ -52,6 +55,8 @@ public class Nota {
         }
         return "Nota "+ getIdNota() + " :" + " Sudah selesai.";
     }
+
+    // Mengupdate nota saat next day
     public void toNextDay() {
         this.sisaHariPengerjaan--;
         if (getSisaHariPengerjaan() < 0 & !isDone()) {
@@ -60,23 +65,27 @@ public class Nota {
         }
     }
 
+    // Perhitungan harga nota
     public long calculateHarga(){
-        long harga = this.baseHarga * getBerat();
-        for (LaundryService service : services) {
-            harga += service.getHarga(getBerat());
-        }                           //if (member != null) {} return -1; // Tadinya template ada return -1 nya buat jaga2 comment dulu 
-        if (telat) {
-            harga += (getAmountDayTelat() * 2000);
-            if (harga <= 0) {
-                harga = 0;
+        if (member != null) {
+            long harga = this.baseHarga * getBerat();
+            for (LaundryService service : services) {
+                harga += service.getHarga(getBerat());
+            }
+            if (telat) {
+                harga += (getAmountDayTelat() * 2000);
+                if (harga <= 0) {
+                    harga = 0;
+                    return harga;
+                }
+                return harga;
+            } else {
                 return harga;
             }
-            return harga;
-        } else {
-            return harga;
-        }
+        } return -1;
     }
 
+    // Mendapatkan status selesainya nota
     public String getNotaStatus() {
         String status = "";
         if (isDone()) {
@@ -98,7 +107,6 @@ public class Nota {
         }
         formattedToString += ("Harga Akhir:" + calculateHarga());
 
-        // MASIH SALAH KALO BAGIAN TERLAMBAT
         if (telat) {
             formattedToString += " Ada kompensasi keterlambatan " + (getAmountDayTelat() * -1) + " * 2000 hari";
         }
@@ -133,20 +141,21 @@ public class Nota {
     public int getIdNota() {
         return this.idNota;
     }
+    
+    public void setAmountDayTelat(int day) {
+        this.amountDayTelat = day;
+    }
+    
+    public int getAmountDayTelat() {
+        return amountDayTelat;
+    }
 
+    // Method untuk mengupdate nilai iSDone sesuai dengan sudah selesai atau belumnya service
     public boolean areAllServicesDone() {
         boolean temp = true;
         for (LaundryService service : services) {
             temp &= (service.isDone());
         }
         return temp;
-    }
-
-    public void setAmountDayTelat(int day) {
-        this.amountDayTelat = day;
-    }
-
-    public int getAmountDayTelat() {
-        return amountDayTelat;
     }
 }

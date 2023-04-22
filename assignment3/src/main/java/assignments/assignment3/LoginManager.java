@@ -10,6 +10,7 @@ public class LoginManager {
     private final EmployeeSystem employeeSystem;
     private final MemberSystem memberSystem;
 
+    // Parameterized Constructor of LoginManager
     public LoginManager(EmployeeSystem employeeSystem, MemberSystem memberSystem) {
         this.employeeSystem = employeeSystem;
         this.memberSystem = memberSystem;

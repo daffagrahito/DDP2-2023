@@ -2,8 +2,11 @@ package assignments.assignment3.nota.service;
 
 // import assignments.assignment3.nota.Nota;
 
-public class AntarService implements LaundryService{
+public class AntarService implements LaundryService {
+    
+    // Boolean untuk mengecek apakah service ini sudah selesai atau belum
     private boolean isAntarDone = false;
+    
     @Override
     public String doWork() {
         if (!isAntarDone) {

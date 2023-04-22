@@ -184,6 +184,7 @@ public class NotaGenerator {
         return nota;
     }
 
+    // Method untuk mendapatkan banyak hari selesai pada paket yang sesuai (dari solusi TP1)
     public static int toHariPaket(String paket) {
         paket = paket.toLowerCase();
         if (paket.equals("express"))
@@ -195,6 +196,7 @@ public class NotaGenerator {
         return -1;
     }
 
+    // Method untuk mengubah paket menjadi harga paket yang sesuai (dari solusi TP1)
     public static long toHargaPaket(String paket) {
         paket = paket.toLowerCase();
         if (paket.equals("express"))
@@ -206,6 +208,7 @@ public class NotaGenerator {
         return -1;
     }
 
+    // Method untuk mengecek apakah String numerik atau tidak (dari solusi TP1)
     private static boolean isNumeric(String str) {
         for (char c : str.toCharArray()) {
             if (!Character.isDigit(c))
@@ -214,6 +217,7 @@ public class NotaGenerator {
         return true;
     }
 
+    // Method untuk mendapatkan input berat (dari solusi TP1)
     public static int getBerat(Scanner input) {
         System.out.println("Masukan berat cucian Anda [Kg]: ");
         String beratInput = input.nextLine();
@@ -231,6 +235,7 @@ public class NotaGenerator {
         return berat;
     }
 
+    // Method untuk mendapatkan input paket (dari solusi TP1)
     public static String getPaket(Scanner input) {
         String paket = "";
         showPaket();

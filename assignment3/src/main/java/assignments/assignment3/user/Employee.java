@@ -1,7 +1,9 @@
 package assignments.assignment3.user;
 
 public class Employee extends Member {
-    public static int employeeCount;
+    public static int employeeCount;    // Menghitung banyaknya employee yang tersedia
+
+    // Parameterized Constructor dari Employee
     public Employee(String nama, String password) {
         super(nama, generateId(nama), password);
     }

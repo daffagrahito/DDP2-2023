@@ -5,9 +5,10 @@ public class Member {
     protected String id;
     protected String password;
     protected String nama;
-    protected String noHp; // Ini buat apaan ya?
+    protected String noHp;
     protected Nota[] notaList = new Nota[0];
 
+    // Parameterized Constructor dari Member
     public Member(String nama, String id, String password) {
         this.nama = nama;
         this.id = id;
@@ -77,10 +78,5 @@ public class Member {
 
     public void setNoHp(String nomor) {
         noHp = nomor;
-    }
-
-    // Hanya tambahan jika ingin mengecek membernya
-    public String toString() {
-        return getNama() + ":" + getId();
     }
 }

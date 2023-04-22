@@ -27,7 +27,7 @@ public class EmployeeSystem extends SystemCLI {
      * @return true jika user log.
      */
     @Override
-    protected boolean processChoice(int choice) {   // edit perintah untuk kerja dan display list nota disini
+    protected boolean processChoice(int choice) {
         boolean logout = false;
         if (choice == 3) {
             logout = true;
@@ -42,8 +42,9 @@ public class EmployeeSystem extends SystemCLI {
                 System.out.println(nota.kerjakan());
             }
             System.out.println();
-        } else {
+        } else {    // Hanya tambahan bila input tidak valid
             System.out.println("Pilihan tidak valid, silahkan coba lagi.");
+            System.out.println();
         }
         return logout;
     }

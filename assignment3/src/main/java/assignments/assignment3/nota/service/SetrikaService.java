@@ -1,7 +1,10 @@
 package assignments.assignment3.nota.service;
 
-public class SetrikaService implements LaundryService{
+public class SetrikaService implements LaundryService {
+    
+    // Boolean untuk mengecek apakah service ini sudah selesai atau belum
     private boolean isSetrikaDone = false;
+    
     @Override
     public String doWork() {
         if (!isSetrikaDone) {

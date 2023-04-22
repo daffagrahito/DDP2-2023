@@ -28,18 +28,6 @@ public class MemberSystem extends SystemCLI {
                 System.out.println();
             }
         } else if (choice == 1) {
-            /*System.out.println("Masukkan paket laundry:");
-            NotaGenerator.showPaket();
-            String paketLaundry = in.nextLine();*/
-            /*System.out.println("Masukkan berat cucian Anda [Kg]: ");
-            int berat = Integer.parseInt(in.nextLine());
-            
-            // Mengecek apabila berat yang diinput dibawah 2 kg
-            if (berat < 2) {
-                System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
-                berat = 2;
-            }*/
-            
             // Meminta input yang sesuai dengan asumsi input valid
             String paketLaundry = NotaGenerator.getPaket(in);   // Terdapat parameter Scanner input agar Scanner input yang dipakai
             int berat = NotaGenerator.getBerat(in);             // sama saat menggunakan method tersebut dan tidak error
@@ -67,7 +55,7 @@ public class MemberSystem extends SystemCLI {
 
             System.out.println("Nota berhasil dibuat!");
             System.out.println();
-        } else {
+        } else { // Hanya tambahan bila input tidak valid
             System.out.println("Pilihan tidak valid, silahkan coba lagi.");
             System.out.println();
         }

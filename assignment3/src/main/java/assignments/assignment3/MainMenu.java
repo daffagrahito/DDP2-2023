@@ -25,6 +25,7 @@ public class MainMenu {
         mainMenu.run();
     }
 
+    // Constructor of MainMenu
     public MainMenu(Scanner in, LoginManager loginManager) {
         this.in = in;
         this.loginManager = loginManager;
@@ -62,11 +63,11 @@ public class MainMenu {
     /**
      * Mendaftarkan user pada sistem.
      */
-    void register() {   // Ini tuh perlu divalidasi gasih buat no HP dll
+    void register() { 
         System.out.println("Masukan nama Anda: ");
         String nama = in.nextLine();
         System.out.println("Masukan nomor handphone Anda: ");
-        String noHp = in.nextLine();
+        String noHp = in.nextLine();        // Asumsi input noHP juga selalu valid
         System.out.println("Masukan password Anda: ");
         String password = in.nextLine();
 
@@ -76,7 +77,7 @@ public class MainMenu {
             System.out.println();
             return;
         }
-        registeredMember.setNoHp(noHp); // Not sure if this is useful or not
+        registeredMember.setNoHp(noHp);     // Menambahkan noHP ke member yang dibuat
         System.out.printf("Berhasil membuat user dengan ID %s!\n", registeredMember.getId());
         System.out.println();
     }
