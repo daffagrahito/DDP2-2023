@@ -53,12 +53,15 @@ public class Nota {
                 return dikerjakan;
             }
         }
-        return "Nota "+ getIdNota() + " :" + " Sudah selesai.";
+        return "Nota "+ getIdNota() + " : " + "Sudah selesai.";
     }
 
     // Mengupdate nota saat next day
     public void toNextDay() {
-        this.sisaHariPengerjaan--;
+        if (!isDone) {
+            this.sisaHariPengerjaan--;
+        }
+        
         if (getSisaHariPengerjaan() < 0 & !isDone()) {
             telat = true;
             setAmountDayTelat(getSisaHariPengerjaan());
@@ -89,14 +92,14 @@ public class Nota {
     public String getNotaStatus() {
         String status = "";
         if (isDone()) {
-            status += "Nota "+ getIdNota() +" : Sudah selesai.";
-            return status;
+            status += "Nota " + getIdNota() + " : Sudah selesai.";
         } else {
-            status += "Nota "+ getIdNota() +" : Belum selesai.";
-            return status;
+            status += "Nota " + getIdNota() + " : Belum selesai.";
         }
+        return status;
     }
 
+    // toString yang merupakan Override untuk mengeprint informasi nota yang diperlukan
     @Override
     public String toString(){
         String formattedToString =  String.format("[ID Nota = %d]%n", idNota) + 
@@ -150,7 +153,7 @@ public class Nota {
         return amountDayTelat;
     }
 
-    // Method untuk mengupdate nilai iSDone sesuai dengan sudah selesai atau belumnya service
+    // Method untuk mengupdate nilai isDone sesuai dengan sudah selesai atau belumnya service
     public boolean areAllServicesDone() {
         boolean temp = true;
         for (LaundryService service : services) {

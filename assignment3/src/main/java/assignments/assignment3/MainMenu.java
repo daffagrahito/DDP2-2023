@@ -1,5 +1,6 @@
 package assignments.assignment3;
 
+import assignments.assignment1.NotaGenerator;
 import assignments.assignment3.nota.NotaManager;
 import assignments.assignment3.user.Member;
 import assignments.assignment3.user.menu.EmployeeSystem;
@@ -67,7 +68,11 @@ public class MainMenu {
         System.out.println("Masukan nama Anda: ");
         String nama = in.nextLine();
         System.out.println("Masukan nomor handphone Anda: ");
-        String noHp = in.nextLine();        // Asumsi input noHP juga selalu valid
+        String noHp = in.nextLine();
+        while (!NotaGenerator.isNumeric(noHp)) {                // Tambahan untuk jaga-jaga kevalidan
+            System.out.println("Field nomor hp hanya menerima digit.");
+            noHp = in.nextLine();
+        }
         System.out.println("Masukan password Anda: ");
         String password = in.nextLine();
 

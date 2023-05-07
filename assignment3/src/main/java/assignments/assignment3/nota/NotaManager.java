@@ -16,7 +16,7 @@ public class NotaManager {
             if (nota == null) {
                 continue;
             }
-            else nota.toNextDay(); // kalo ternyata yang diminta adalah employee harus kerja dulu baru sisaHariPengerjaan berkurang, berarti ini dan yang ada di class Nota dan NotaManager salah
+            else nota.toNextDay();
         }        
 
         cal.add(Calendar.DATE, 1);

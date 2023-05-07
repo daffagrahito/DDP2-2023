@@ -28,7 +28,7 @@ public class MemberSystem extends SystemCLI {
                 System.out.println();
             }
         } else if (choice == 1) {
-            // Meminta input yang sesuai dengan asumsi input valid
+            // Meminta input
             String paketLaundry = NotaGenerator.getPaket(in);   // Terdapat parameter Scanner input agar Scanner input yang dipakai
             int berat = NotaGenerator.getBerat(in);             // sama saat menggunakan method tersebut dan tidak error
             
@@ -38,16 +38,14 @@ public class MemberSystem extends SystemCLI {
             System.out.print("[Ketik x untuk tidak mau]: ");
             boolean booleanSetrika = !in.nextLine().equalsIgnoreCase("x");
             if (booleanSetrika) {
-                SetrikaService setrika = new SetrikaService();
-                notaBaru.addService(setrika);
+                notaBaru.addService(new SetrikaService());
             }
 
             System.out.println("Mau diantar oleh kurir kami? Dijamin aman dan cepat sampai tujuan!\nCuma 2000 / 4kg, kemudian 500 / kg");
             System.out.print("[Ketik x untuk tidak mau]: ");
             boolean booleanAntar = !in.nextLine().equalsIgnoreCase("x");
             if (booleanAntar) {
-                AntarService antar = new AntarService();
-                notaBaru.addService(antar);
+                notaBaru.addService(new AntarService());
             }
 
             loginMember.addNota(notaBaru);
