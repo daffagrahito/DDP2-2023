@@ -20,7 +20,7 @@ public class MainFrame extends JFrame{
     private final Loginable[] loginablePanel;
     private final MemberSystem memberSystem = new MemberSystem();
     private final EmployeeSystem employeeSystem = new EmployeeSystem();
-    private final CardLayout cards = new CardLayout();
+    private final CardLayout cards = new CardLayout(); // Pembuat pindah panel
     private final JPanel mainPanel = new JPanel(cards);
     private final LoginManager loginManager = new LoginManager(employeeSystem, memberSystem);
     private final HomeGUI homeGUI = new HomeGUI();
@@ -32,12 +32,10 @@ public class MainFrame extends JFrame{
 
     private MainFrame(){
         super("CuciCuciSystem");
-//        TODO: uncomment code dibawah ini setelah kamu implmentasikan addEmployee pada EmployeeSystem.
-//        // for context dari 2 employee baru ini : https://ristek.link/karyawan-baru-cucicuci
-//        employeeSystem.addEmployee(new Employee[]{
-//                new Employee("delta Epsilon Huha Huha", "ImplicitDiff"),
-//                new Employee("Regret", "FansBeratKanaArima")
-//        });
+        employeeSystem.addEmployee(new Employee[]{
+               new Employee("delta Epsilon Huha Huha", "ImplicitDiff"),
+               new Employee("Regret", "FansBeratKanaArima")
+        });
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 432);
         setVisible(true);
@@ -67,9 +65,9 @@ public class MainFrame extends JFrame{
     /**
      * Method untuk mendapatkan instance MainFrame.
      * Instance Class MainFrame harus diambil melalui method ini agar menjamin hanya terdapat satu Frame pada program.
+     * dengan cek apakah instance sudah pernah dibuat apa belum
      *
-     * @return instance dari class MainFrame
-     * */
+     * @return instance dari class MainFrame */
     public static MainFrame getInstance(){
         if (instance == null) {
             instance = new MainFrame();
@@ -83,7 +81,14 @@ public class MainFrame extends JFrame{
      * @param page -> key dari halaman yang diinginkan.
      * */
     public void navigateTo(String page){
-        // TODO
+        switch (page) {
+            case HomeGUI.KEY -> cards.show(mainPanel, HomeGUI.KEY);
+            case RegisterGUI.KEY -> cards.show(mainPanel, RegisterGUI.KEY);
+            case LoginGUI.KEY -> cards.show(mainPanel, LoginGUI.KEY);
+            case EmployeeSystemGUI.KEY -> cards.show(mainPanel, EmployeeSystemGUI.KEY);
+            case MemberSystemGUI.KEY -> cards.show(mainPanel, MemberSystemGUI.KEY);
+            case CreateNotaGUI.KEY -> cards.show(mainPanel, CreateNotaGUI.KEY);
+        }
     }
 
     /**
@@ -99,7 +104,7 @@ public class MainFrame extends JFrame{
     public boolean login(String id, String password){
         for (Loginable panel:
                 loginablePanel) {
-            // TODO
+            panel.login(id, password);
         }
         return false;
     }
@@ -118,9 +123,7 @@ public class MainFrame extends JFrame{
 
     public static void main(String[] args) {
         // menampilkan GUI kalian.
-        // Jika ingin tau lebih lanjut mengapa menggunakan SwingUtilities.invokeLater
-        // silakan akses https://stackoverflow.com/questions/6567870/what-does-swingutilities-invokelater-do
-        // Tapi in general kalian tidak usah terlalu overthinking line ini selain fungsi utamanya adalah menampilkan GUI
+        // why? -> https://stackoverflow.com/questions/6567870/what-does-swingutilities-invokelater-do
         SwingUtilities.invokeLater(MainFrame::getInstance);
     }
 }

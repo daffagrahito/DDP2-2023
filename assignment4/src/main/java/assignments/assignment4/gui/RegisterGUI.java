@@ -4,6 +4,8 @@ import assignments.assignment3.LoginManager;
 import assignments.assignment3.user.Member;
 import assignments.assignment4.MainFrame;
 
+import static assignments.assignment1.NotaGenerator.isNumeric;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -28,7 +30,7 @@ public class RegisterGUI extends JPanel {
 
         // Set up main panel, Feel free to make any changes
         mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
         initGUI();
 
@@ -41,7 +43,69 @@ public class RegisterGUI extends JPanel {
      * Be creative and have fun!
      * */
     private void initGUI() {
-        // TODO
+        nameLabel = new JLabel("Masukkan nama Anda:");
+        nameTextField = new JTextField(60);
+    
+        phoneLabel = new JLabel("Masukkan nomor handphone Anda:");
+        phoneTextField = new JTextField(60);
+    
+        passwordLabel = new JLabel("Masukkan password Anda:");
+        passwordField = new JPasswordField(60);
+    
+        registerButton = new JButton("Login");
+        registerButton.addActionListener(e -> handleRegister());
+    
+        backButton = new JButton("Kembali");
+        backButton.addActionListener(e -> handleBack());
+    
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(15, 0, 10, 0);
+        gbc.anchor = GridBagConstraints.WEST;
+        mainPanel.add(nameLabel, gbc);
+    
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.insets = new Insets(15, 0, 10, 0);
+        gbc.anchor = GridBagConstraints.WEST;
+        mainPanel.add(nameTextField, gbc);
+    
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.insets = new Insets(15, 0, 10, 0);
+        gbc.anchor = GridBagConstraints.WEST;
+        mainPanel.add(phoneLabel, gbc);
+    
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.insets = new Insets(15, 0, 10, 0);
+        gbc.anchor = GridBagConstraints.WEST;
+        mainPanel.add(phoneTextField, gbc);
+    
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.insets = new Insets(15, 0, 10, 0);
+        gbc.anchor = GridBagConstraints.WEST;
+        mainPanel.add(passwordLabel, gbc);
+    
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.insets = new Insets(15, 0, 10, 0);
+        gbc.anchor = GridBagConstraints.WEST;
+        mainPanel.add(passwordField, gbc);
+    
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        gbc.insets = new Insets(15, 0, 10, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+        mainPanel.add(registerButton, gbc);
+    
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.insets = new Insets(15, 0, 10, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+        mainPanel.add(backButton, gbc);
     }
 
     /**
@@ -49,6 +113,10 @@ public class RegisterGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "backButton"
      * */
     private void handleBack() {
+        MainFrame.getInstance().navigateTo(HomeGUI.KEY);
+        nameTextField.setText("");
+        phoneTextField.setText("");
+        passwordField.setText("");
     }
 
     /**

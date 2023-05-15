@@ -30,9 +30,9 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * */
     @Override
     protected JButton[] createButtons() {
-        // TODO
-        return new JButton[]{
-        };
+        JButton nyuciButton = new JButton("It's Nyuci Time");
+        JButton notaDisplayButton = new JButton("Display List Nota");
+        return new JButton[]{nyuciButton, notaDisplayButton};
     }
 
     /**
@@ -62,6 +62,6 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button kedua pada createButtons
      * */
     private void cuci() {
-        // TODO
+        JOptionPane.showMessageDialog(this, String.format("Stand back! %s beginning to nyuci!", loggedInMember.getNama()), "Nyuci Time", JOptionPane.INFORMATION_MESSAGE);
     }
 }
