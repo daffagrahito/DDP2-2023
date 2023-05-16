@@ -48,6 +48,7 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
             throw new IllegalStateException("Number of buttons and listeners must be equal.");
         }
 
+        // Membuat panel untuk button
         JPanel buttonsPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -65,6 +66,7 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
             buttonsPanel.add(button, gbc);
         }
 
+        // Menambahkan ActionListener pada logout button
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(new ActionListener() {
             @Override
@@ -90,7 +92,12 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
      * @return true jika ID dan password sesuai dengan instance member, false jika tidak.
      * */
     public boolean login(String id, String password) {
-        // TODO
+        loggedInMember = this.systemCLI.authUser(id, password);
+        if (loggedInMember != null) {
+            welcomeLabel.setText("Welcome! " + loggedInMember.getNama());
+            loggedInAsLabel.setText("Logged in as " + loggedInMember.getId());
+            return true;
+        }
         return false;
     }
 

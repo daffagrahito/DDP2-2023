@@ -49,4 +49,14 @@ public class LoginManager {
         }
         return null;
     }
+
+    // Dibawah ini adalah getter untuk MemberSystem dan EmployeeSystem
+
+    public MemberSystem getMemberSystem() {
+        return this.memberSystem;
+    }
+
+    public EmployeeSystem getEmployeeSystem() {
+        return this.employeeSystem;
+    }
 }

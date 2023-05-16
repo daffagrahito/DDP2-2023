@@ -132,10 +132,8 @@ public class NotaGenerator {
     
     // Method untuk membuat ID dari nama dan nomor handphone serta ditambah checksum di akhir
     public static String generateId(String nama, String nomorHP) {
-        nama = nama.replaceAll("\\s.*", ""); //  Mengambil kata sebelum whitespace pertama saja menggunakan regex
-        String namaKapital = nama.toUpperCase();
-        String idBefore = namaKapital + "-" + nomorHP;
         String idAfter = "";
+        String idBefore = nama.strip().split(" ")[0].toUpperCase() + "-" + nomorHP;
         int checksum = 0;
         for (int i = 0; i < idBefore.length(); i++) {
             char letter = idBefore.charAt(i);
@@ -153,9 +151,9 @@ public class NotaGenerator {
         }
         // Mengecek apabila checksum single digit atau bukan
         if (checksum < 10) {
-            idAfter = idBefore + "-0" + checksum;
+            idAfter += idBefore + "-0" + checksum;
         } else {
-            idAfter = idBefore + "-" + checksum;
+            idAfter += idBefore + "-" + checksum;
         }
         return idAfter;
     }

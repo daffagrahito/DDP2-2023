@@ -14,7 +14,6 @@ import assignments.assignment4.gui.member.member.MemberSystemGUI;
 import javax.swing.*;
 import java.awt.*;
 
-
 public class MainFrame extends JFrame{
     private static MainFrame instance;
     private final Loginable[] loginablePanel;
@@ -41,7 +40,7 @@ public class MainFrame extends JFrame{
         setVisible(true);
         loginablePanel = new Loginable[]{
                 employeeSystemGUI,
-                memberSystemGUI,
+                memberSystemGUI
         };
         initGUI();
         cards.show(mainPanel, HomeGUI.KEY);
@@ -102,13 +101,16 @@ public class MainFrame extends JFrame{
      * @return boolean yang menandakan apakah login berhasil atau gagal.
      * */
     public boolean login(String id, String password){
-        for (Loginable panel:
-                loginablePanel) {
-            panel.login(id, password);
+        for (Loginable panel : loginablePanel) {
+            if (panel.login(id, password)) {
+                if (loginManager.getSystem(id) != null) { // Mendapatkan system yang sesuai dari getSystem
+                    navigateTo(panel.getPageName());
+                    return true;
+                }
+            }
         }
         return false;
     }
-
 
     /**
      * Method untuk logout dari sistem, kemudian menampilkan halaman Home.
@@ -123,7 +125,7 @@ public class MainFrame extends JFrame{
 
     public static void main(String[] args) {
         // menampilkan GUI kalian.
-        // why? -> https://stackoverflow.com/questions/6567870/what-does-swingutilities-invokelater-do
+        // Reference -> https://stackoverflow.com/questions/6567870/what-does-swingutilities-invokelater-do
         SwingUtilities.invokeLater(MainFrame::getInstance);
     }
 }

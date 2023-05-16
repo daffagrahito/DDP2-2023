@@ -20,12 +20,11 @@ public class LoginGUI extends JPanel {
     private LoginManager loginManager;
 
     public LoginGUI(LoginManager loginManager) {
-        super(new BorderLayout()); // Setup layout, Feel free to make any changes
+        super(new BorderLayout()); // Setup layout
         this.loginManager = loginManager;
 
-        // Set up main panel, Feel free to make any changes
+        // Set up main panel
         mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
         initGUI();
 
@@ -38,6 +37,7 @@ public class LoginGUI extends JPanel {
      * Be creative and have fun!
      * */
     private void initGUI() {
+        // Set up Component and adding ActionListener
         idLabel = new JLabel("Masukkan ID Anda:");
         idTextField = new JTextField(60);
 
@@ -50,6 +50,7 @@ public class LoginGUI extends JPanel {
         backButton = new JButton("Kembali");
         backButton.addActionListener(e -> handleBack());
 
+        // Menata dan merapikan letak component di panel
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -60,19 +61,16 @@ public class LoginGUI extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.insets = new Insets(20, 0, 20, 0);
-        gbc.anchor = GridBagConstraints.WEST;
         mainPanel.add(idTextField, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.insets = new Insets(30, 0, 20, 0);
-        gbc.anchor = GridBagConstraints.WEST;
         mainPanel.add(passwordLabel, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.insets = new Insets(20, 0, 20, 0);
-        gbc.anchor = GridBagConstraints.WEST;
         mainPanel.add(passwordField, gbc);
 
         gbc.gridx = 0;
@@ -84,7 +82,6 @@ public class LoginGUI extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.insets = new Insets(20, 0, 20, 0);
-        gbc.anchor = GridBagConstraints.CENTER;
         mainPanel.add(backButton, gbc);
     }
 
@@ -103,6 +100,20 @@ public class LoginGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "loginButton"
      * */
     private void handleLogin() {
-        // TODO
+        String id = idTextField.getText();
+        String pass = new String(passwordField.getPassword());
+
+        // Condition apabila field ada yang kosong
+        if (id.equals("") || pass.equals("")) {
+            JOptionPane.showMessageDialog(this, "Semua field di atas wajib diisi!", "Empty Field", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else { // Check apakah attempt loginnya berhasil
+            boolean loginAttempt = MainFrame.getInstance().login(id, pass);
+            if (!loginAttempt) {
+                JOptionPane.showMessageDialog(this, "Login gagal!", "Login Failed", JOptionPane.ERROR_MESSAGE);
+            }
+            idTextField.setText("");
+            passwordField.setText("");
+        }
     }
 }

@@ -34,8 +34,8 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * */
     @Override
     protected JButton[] createButtons() {
-        JButton createNotaButton = new JButton("It's Nyuci Time");
-        JButton detailNotaButton = new JButton("Display List Nota");
+        JButton createNotaButton = new JButton("Saya ingin laundry");
+        JButton detailNotaButton = new JButton("Lihat detail nota saya");
         return new JButton[]{createNotaButton, detailNotaButton};
     }
 
@@ -55,18 +55,43 @@ public class MemberSystemGUI extends AbstractMemberGUI {
 
     /**
      * Menampilkan detail Nota milik loggedInMember.
-     * Akan dipanggil jika pengguna menekan button pertama pada createButtons
+     * Akan dipanggil jika pengguna menekan button kedua pada createButtons
      * */
     private void showDetailNota() {
-        // TODO
+        String detailNota = "";
+        Nota[] notaListMember = getLoggedInMember().getNotaList();
+        for (Nota eachNota : notaListMember) {
+            detailNota += (eachNota.toString() + "\n\n");
+        }
+
+        if (detailNota.length() == 0) {
+            detailNota += ("Belum pernah laundry di CuciCuci, hiks :'(");
+        }
+        
+        // Display Text Nota
+        JTextArea textArea = new JTextArea(detailNota);
+        textArea.setEditable(false);
+        textArea.setRows(10); // Set number of visible rows
+        textArea.setColumns(40); // Set number of visible columns
+
+        JScrollPane scrollableTextArea = new JScrollPane(textArea);
+        scrollableTextArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollableTextArea.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        
+        JOptionPane optionPane = new JOptionPane(scrollableTextArea, JOptionPane.INFORMATION_MESSAGE);
+        optionPane.setPreferredSize(new Dimension(460, 360)); // Set size yang diinginkan
+
+        // Show JOptionPane dialog
+        JDialog dialog = optionPane.createDialog(this, "Detail Nota");
+        dialog.setVisible(true);
     }
 
     /**
      * Pergi ke halaman CreateNotaGUI.
-     * Akan dipanggil jika pengguna menekan button kedua pada createButtons
+     * Akan dipanggil jika pengguna menekan button pertama pada createButtons
      * */
     private void createNota() {
-        // TODO
+        MainFrame.getInstance().navigateTo(CreateNotaGUI.KEY);
     }
 
 }

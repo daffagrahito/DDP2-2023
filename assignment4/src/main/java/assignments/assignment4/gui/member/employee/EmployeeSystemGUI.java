@@ -16,7 +16,6 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
         super(systemCLI);
     }
 
-
     @Override
     public String getPageName(){
         return KEY;
@@ -51,17 +50,34 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
 
     /**
      * Menampilkan semua Nota yang ada pada sistem.
-     * Akan dipanggil jika pengguna menekan button pertama pada createButtons
+     * Akan dipanggil jika pengguna menekan button kedua pada createButtons
      * */
     private void displayNota() {
-        // TODO
+        String statusNota = "";
+            for (Nota nota : NotaManager.notaList) {
+                statusNota += (nota.getNotaStatus() + "\n");
+            }
+            if (statusNota.length() == 0) { // Jika belum ada cucian sama sekali
+                statusNota += "Belum ada Cucian";
+                JOptionPane.showMessageDialog(this, statusNota, "List Nota", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        JOptionPane.showMessageDialog(this, statusNota, "List Nota", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
      * Menampilkan dan melakukan action mencuci.
-     * Akan dipanggil jika pengguna menekan button kedua pada createButtons
+     * Akan dipanggil jika pengguna menekan button pertama pada createButtons
      * */
     private void cuci() {
         JOptionPane.showMessageDialog(this, String.format("Stand back! %s beginning to nyuci!", loggedInMember.getNama()), "Nyuci Time", JOptionPane.INFORMATION_MESSAGE);
+        if (NotaManager.notaList.length == 0) { // Jika belum ada cucian sama sekali
+            JOptionPane.showMessageDialog(this, "Nothing to cuci here", "Nyuci Results", JOptionPane.ERROR_MESSAGE);
+        } else {
+            String kerjakanStatus = "";
+            for (Nota nota : NotaManager.notaList) {
+                kerjakanStatus += (nota.kerjakan() + "\n");
+            } JOptionPane.showMessageDialog(this, kerjakanStatus, "Nyuci Results", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 }

@@ -30,7 +30,6 @@ public class RegisterGUI extends JPanel {
 
         // Set up main panel, Feel free to make any changes
         mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
         initGUI();
 
@@ -43,6 +42,7 @@ public class RegisterGUI extends JPanel {
      * Be creative and have fun!
      * */
     private void initGUI() {
+        // Set up component
         nameLabel = new JLabel("Masukkan nama Anda:");
         nameTextField = new JTextField(60);
     
@@ -52,12 +52,13 @@ public class RegisterGUI extends JPanel {
         passwordLabel = new JLabel("Masukkan password Anda:");
         passwordField = new JPasswordField(60);
     
-        registerButton = new JButton("Login");
+        registerButton = new JButton("Register");
         registerButton.addActionListener(e -> handleRegister());
     
         backButton = new JButton("Kembali");
         backButton.addActionListener(e -> handleBack());
     
+        // Menata dan merapikan letak component di panel
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -124,6 +125,36 @@ public class RegisterGUI extends JPanel {
     * Akan dipanggil jika pengguna menekan "registerButton"
     * */
     private void handleRegister() {
-        // TODO
-    }
+        // Mendapatkan input dari user yang diisi pada TextField dan PasswordField
+        String name = nameTextField.getText();
+        String phoneNumber = phoneTextField.getText();
+        String pass = new String(passwordField.getPassword());
+
+        // Check Validasi yang diminta
+        if (name.equals("") || phoneNumber.equals("") || pass.equals("")) {
+            JOptionPane.showMessageDialog(this, "Semua field di atas wajib diisi!", "Empty Field", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else if (!isNumeric(phoneNumber)) {   // Validasi nomor telepon dengan isNumeric dari NotaGenerator
+            JOptionPane.showMessageDialog(this, "Nomor telepon harus angka!", "Invalid Phone Number", JOptionPane.ERROR_MESSAGE);
+            phoneTextField.setText("");
+            return;
+        } else {
+            // Register member 
+            Member member = loginManager.register(name, phoneNumber, pass);
+            if (member == null) {   // Pengecekan apabila member dengan id yang sama sudah pernah register
+                JOptionPane.showMessageDialog(this, String.format("User dengan nama %s dan nomor hp %s sudah ada", name, phoneNumber), "Failed To Register", JOptionPane.ERROR_MESSAGE);
+                MainFrame.getInstance().navigateTo(HomeGUI.KEY);
+                nameTextField.setText("");
+                phoneTextField.setText("");
+                passwordField.setText("");
+                return;
+            }
+            JOptionPane.showMessageDialog(this, String.format("Berhasil membuat user dengan ID %s!", member.getId()), "Success", JOptionPane.INFORMATION_MESSAGE);
+            MainFrame.getInstance().navigateTo(HomeGUI.KEY);
+            nameTextField.setText("");
+            phoneTextField.setText("");
+            passwordField.setText("");
+            return;
+        }
+    } 
 }
