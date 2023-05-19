@@ -71,8 +71,8 @@ public class MemberSystemGUI extends AbstractMemberGUI {
         // Display Text Nota
         JTextArea textArea = new JTextArea(detailNota);
         textArea.setEditable(false);
-        textArea.setRows(10); // Set number of visible rows
-        textArea.setColumns(40); // Set number of visible columns
+        textArea.setRows(2); // Set banyak rows visible
+        textArea.setColumns(5); // Set banyak columns visible
 
         JScrollPane scrollableTextArea = new JScrollPane(textArea);
         scrollableTextArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);

@@ -167,12 +167,8 @@ public class CreateNotaGUI extends JPanel {
         NotaManager.addNota(nota);
         JOptionPane.showMessageDialog(this, "Nota berhasil dibuat!", "Success", JOptionPane.INFORMATION_MESSAGE);
         
-        // Reset semua value yang telah terisi dan kembali ke Main Page Member Login (MemberSystemGUI)
-        beratTextField.setText("");
-        paketComboBox.setSelectedIndex(0);
-        setrikaCheckBox.setSelected(false);
-        antarCheckBox.setSelected(false);
-        MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);
+        // Reset semua value yang telah terisi
+        resetFields();
     }
 
     /**
@@ -181,6 +177,10 @@ public class CreateNotaGUI extends JPanel {
      * */
     private void handleBack() {
         MainFrame.getInstance().navigateTo(MemberSystemGUI.KEY);
+        resetFields();
+    }
+
+    private void resetFields() {
         beratTextField.setText("");
         paketComboBox.setSelectedIndex(0);
         setrikaCheckBox.setSelected(false);

@@ -20,15 +20,16 @@ public class RegisterGUI extends JPanel {
     private JTextField phoneTextField;
     private JLabel passwordLabel;
     private JPasswordField passwordField;
+    private JToggleButton showPasswordButton;   // Atribut bonus untuk button yang bisa menampilkan character pada password
     private JButton registerButton;
     private LoginManager loginManager;
     private JButton backButton;
 
     public RegisterGUI(LoginManager loginManager) {
-        super(new BorderLayout()); // Setup layout, Feel free to make any changes
+        super(new BorderLayout()); // Setup layout
         this.loginManager = loginManager;
 
-        // Set up main panel, Feel free to make any changes
+        // Set up main panel
         mainPanel = new JPanel(new GridBagLayout());
 
         initGUI();
@@ -43,20 +44,28 @@ public class RegisterGUI extends JPanel {
      * */
     private void initGUI() {
         // Set up component
+        passwordLabel = new JLabel("Masukkan password Anda:");
+        passwordField = new JPasswordField(48);
+        showPasswordButton = new JToggleButton("Show Password");
+        showPasswordButton.addActionListener(e -> handleShowPassword());
+
         nameLabel = new JLabel("Masukkan nama Anda:");
         nameTextField = new JTextField(60);
+        nameTextField.setPreferredSize(showPasswordButton.getPreferredSize());
     
         phoneLabel = new JLabel("Masukkan nomor handphone Anda:");
         phoneTextField = new JTextField(60);
-    
-        passwordLabel = new JLabel("Masukkan password Anda:");
-        passwordField = new JPasswordField(60);
+        phoneTextField.setPreferredSize(showPasswordButton.getPreferredSize());
     
         registerButton = new JButton("Register");
         registerButton.addActionListener(e -> handleRegister());
     
         backButton = new JButton("Kembali");
         backButton.addActionListener(e -> handleBack());
+
+        JPanel passwordPanel = new JPanel(new BorderLayout());
+        passwordPanel.add(passwordField, BorderLayout.CENTER);
+        passwordPanel.add(showPasswordButton, BorderLayout.EAST);
     
         // Menata dan merapikan letak component di panel
         GridBagConstraints gbc = new GridBagConstraints();
@@ -68,44 +77,31 @@ public class RegisterGUI extends JPanel {
     
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.insets = new Insets(15, 0, 10, 0);
-        gbc.anchor = GridBagConstraints.WEST;
         mainPanel.add(nameTextField, gbc);
     
         gbc.gridx = 0;
         gbc.gridy = 2;
-        gbc.insets = new Insets(15, 0, 10, 0);
-        gbc.anchor = GridBagConstraints.WEST;
         mainPanel.add(phoneLabel, gbc);
     
         gbc.gridx = 0;
         gbc.gridy = 3;
-        gbc.insets = new Insets(15, 0, 10, 0);
-        gbc.anchor = GridBagConstraints.WEST;
         mainPanel.add(phoneTextField, gbc);
     
         gbc.gridx = 0;
         gbc.gridy = 4;
-        gbc.insets = new Insets(15, 0, 10, 0);
-        gbc.anchor = GridBagConstraints.WEST;
         mainPanel.add(passwordLabel, gbc);
     
         gbc.gridx = 0;
         gbc.gridy = 5;
-        gbc.insets = new Insets(15, 0, 10, 0);
-        gbc.anchor = GridBagConstraints.WEST;
-        mainPanel.add(passwordField, gbc);
+        mainPanel.add(passwordPanel, gbc);
     
         gbc.gridx = 0;
         gbc.gridy = 6;
-        gbc.insets = new Insets(15, 0, 10, 0);
         gbc.anchor = GridBagConstraints.CENTER;
         mainPanel.add(registerButton, gbc);
     
         gbc.gridx = 0;
         gbc.gridy = 7;
-        gbc.insets = new Insets(15, 0, 10, 0);
-        gbc.anchor = GridBagConstraints.CENTER;
         mainPanel.add(backButton, gbc);
     }
 
@@ -114,10 +110,7 @@ public class RegisterGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "backButton"
      * */
     private void handleBack() {
-        MainFrame.getInstance().navigateTo(HomeGUI.KEY);
-        nameTextField.setText("");
-        phoneTextField.setText("");
-        passwordField.setText("");
+        resetFields();
     }
 
     /**
@@ -143,18 +136,32 @@ public class RegisterGUI extends JPanel {
             Member member = loginManager.register(name, phoneNumber, pass);
             if (member == null) {   // Pengecekan apabila member dengan id yang sama sudah pernah register
                 JOptionPane.showMessageDialog(this, String.format("User dengan nama %s dan nomor hp %s sudah ada", name, phoneNumber), "Failed To Register", JOptionPane.ERROR_MESSAGE);
-                MainFrame.getInstance().navigateTo(HomeGUI.KEY);
-                nameTextField.setText("");
-                phoneTextField.setText("");
-                passwordField.setText("");
+                resetFields();
                 return;
             }
             JOptionPane.showMessageDialog(this, String.format("Berhasil membuat user dengan ID %s!", member.getId()), "Success", JOptionPane.INFORMATION_MESSAGE);
-            MainFrame.getInstance().navigateTo(HomeGUI.KEY);
-            nameTextField.setText("");
-            phoneTextField.setText("");
-            passwordField.setText("");
+            resetFields();
             return;
         }
     } 
+
+    // Method action bila button Show Password ditekan user
+    private void handleShowPassword() {
+        boolean showPassword = showPasswordButton.isSelected();
+        if (showPassword) {
+            passwordField.setEchoChar((char) 0); // Show password
+        } else {
+            passwordField.setEchoChar('\u2022'); // Hide password dan display bullet character
+        }
+    }
+
+    // Method untuk mereset fields apabila suatu event telah terjadi
+    private void resetFields() {
+        MainFrame.getInstance().navigateTo(HomeGUI.KEY);
+        nameTextField.setText("");
+        phoneTextField.setText("");
+        passwordField.setText("");
+        showPasswordButton.setSelected(true);
+        showPasswordButton.doClick();
+    }
 }
