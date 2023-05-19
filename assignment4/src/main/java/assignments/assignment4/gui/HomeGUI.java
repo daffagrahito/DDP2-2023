@@ -51,7 +51,7 @@ public class HomeGUI extends JPanel {
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
     gbc.gridy = 0;
-    gbc.insets = new Insets(0, 10, 30, 10); 
+    gbc.insets = new Insets(0, 10, 40, 10); 
     gbc.anchor = GridBagConstraints.CENTER;
     mainPanel.add(titleLabel, gbc);
 
@@ -68,7 +68,7 @@ public class HomeGUI extends JPanel {
     mainPanel.add(toNextDayButton, gbc);
 
     gbc.gridy = 4;
-    gbc.insets = new Insets(30, 0, 0, 0);
+    gbc.insets = new Insets(40, 0, 0, 0);
     mainPanel.add(dateLabel, gbc);
     }
 

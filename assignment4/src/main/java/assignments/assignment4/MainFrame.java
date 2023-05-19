@@ -36,7 +36,7 @@ public class MainFrame extends JFrame{
                new Employee("Regret", "FansBeratKanaArima")
         });
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(700, 432);
+        setSize(727, 452);
         setVisible(true);
         setLocationRelativeTo(null);
         loginablePanel = new Loginable[]{
